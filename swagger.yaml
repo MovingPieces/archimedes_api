@@ -13,7 +13,10 @@ servers:
   - description: test API automatically mocked by SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/MovingPieces/Archimedes/0.1.0
 info:
-  description: Archimedes is the firmware for the Ampersand table. Here is its HTTP API
+  description: |
+    Archimedes is the firmware for the Ampersand table. Here is its HTTP API
+    
+    The API is more like scoped JSON RPC than REST, for convenience and consistency.
   version: 0.1.0
   title: Archimedes HTTP API
   contact:
@@ -29,6 +32,8 @@ tags:
     description: Operations relating to tracks
   - name: playlists
     description: Operations relating to playlists
+  - name: info
+    description: getting and setting generic info
     
 paths:
   /order/give:
@@ -58,8 +63,6 @@ paths:
               stop:
                 value:
                   orderType: stop
-              
-        description: Inventory item to add
       responses:
         '200':
           description: order accepted
@@ -67,6 +70,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JSendSuccess'
+        '4XX':
+          description: a client error occured 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendError'
+        '500':
+          description: a server error ocurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendFail'
+  /info/getPosition:
+    post:
+      tags: 
+        - info
+      summary: | 
+        gets the current position of the ball in the format requested
+        by the client
+      description: |
+        The returned Point will be in the requested coordinate system and
+        simplified if requested.
+        
+        NOTE: This endpoint is POST instead of GET for a couple of reasons:
+        - client code consistency - consistent way of passing parameters
+        - making sure the browser/client doesn't cache the response
+        - we're not doing REST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - coordinateSystem
+              properties:
+                coordinateSystem:
+                  type: string
+                  enum: [ThetaRho, XY]
+                simplify:
+                  type: boolean
+                  default: false
+      responses:
+        '200':
+          description: order accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - data
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                    description: should always be set to "success"
+                  data:
+                    $ref: '#/components/schemas/Point'
+                  
         '4XX':
           description: a client error occured 
           content:
