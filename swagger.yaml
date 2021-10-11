@@ -52,7 +52,7 @@ paths:
                   targetPoint:
                     coordinateSystem: ThetaRho
                     theta: 0.323344
-                    rho: 0.99888
+                    rho: incorrectValue
                   interpolation: spiral
                   simplify: false
               stop:
