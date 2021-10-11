@@ -227,7 +227,6 @@ components:
         rho:
           type: number
           format: double
-          example: 0.5
           minimum: 0.0
           maximum: 1.0
     XY:
