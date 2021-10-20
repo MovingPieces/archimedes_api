@@ -42,18 +42,20 @@ paths:
         - orders
       summary: clears the order queue (if exists) and executes a given order immediatley
       description: |
-        todo
-        
-        todo some more
+        NOTE: moveToPoint order type is not implemented yet
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Order'
             examples:
+              play playlist:
+                value:
+                  orderType: playPlaylist
+                  playlistName: clean_fast
               move to point:
                 value:
-                  orderType: MoveToPointOrder
+                  orderType: MoveToPoint
                   targetPoint:
                     coordinateSystem: ThetaRho
                     theta: 0.323344
@@ -63,6 +65,18 @@ paths:
               stop:
                 value:
                   orderType: stop
+              malformed order:
+                value:
+                  orderType: 13
+              move to point order:
+                value:
+                  orderType: moveToPoint
+                  interpolation: linear
+                  simplify: true
+                  target:
+                    coordinateSystem: XY
+                    x: 0.3
+                    y: 0.6
       responses:
         '200':
           description: order accepted
@@ -233,16 +247,18 @@ components:
           description: the name of the playlist, without the extension
           type: string
           example: my_favourites
-      example:
-        orderType: playPlaylist
-        playlistName: my_favourites
     MoveToPointOrder:
       type: object
       required:
-        - targetPoint
+        - orderType
+        - target
         - interpolation
       properties:
-        targetPoint:
+        orderType:
+          type: string
+          enum: [moveToPoint]
+          example: moveToPoint
+        target:
           $ref: '#/components/schemas/Point'
         interpolation:
           $ref: '#/components/schemas/Interpolation'
