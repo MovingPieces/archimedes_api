@@ -65,9 +65,6 @@ paths:
               stop:
                 value:
                   orderType: stop
-              malformed order:
-                value:
-                  orderType: 13
               move to point order:
                 value:
                   orderType: moveToPoint
