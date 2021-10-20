@@ -53,19 +53,11 @@ paths:
                 value:
                   orderType: playPlaylist
                   playlistName: clean_fast
-              move to point:
-                value:
-                  orderType: MoveToPoint
-                  targetPoint:
-                    coordinateSystem: ThetaRho
-                    theta: 0.323344
-                    rho: 0.99888
-                  interpolation: spiral
-                  simplify: false
+
               stop:
                 value:
                   orderType: stop
-              move to point order:
+              move to point - XY:
                 value:
                   orderType: moveToPoint
                   interpolation: linear
@@ -74,6 +66,16 @@ paths:
                     coordinateSystem: XY
                     x: 0.3
                     y: 0.6
+              move to point - Theta Rho:
+                value:
+                  orderType: moveToPoint
+                  interpolation: spiral
+                  simplify: false
+                  target:
+                    coordinateSystem: ThetaRho
+                    theta: 0.323344
+                    rho: 0.99888
+
       responses:
         '200':
           description: order accepted
