@@ -75,7 +75,12 @@ paths:
                     coordinateSystem: ThetaRho
                     theta: 0.323344
                     rho: 0.99888
-
+              run the clock app:
+                value:
+                  orderType: runApp
+                  appName: clock
+                  args:
+                    foo: bar
       responses:
         '200':
           description: order accepted
@@ -219,6 +224,7 @@ components:
         - $ref: '#/components/schemas/StopOrder'
         - $ref: '#/components/schemas/PlayPlaylistOrder'
         - $ref: '#/components/schemas/MoveToPointOrder'
+        - $ref: '#/components/schemas/RunAppOrder'
       discriminator:
         propertyName: orderType
     StopOrder:
@@ -246,6 +252,24 @@ components:
           description: the name of the playlist, without the extension
           type: string
           example: my_favourites
+    RunAppOrder:
+      type: object
+      required:
+        - orderType
+        - appName
+        - args
+      properties:
+        orderType:
+          type: string
+          enum: [runApp]
+          example: runApp
+        appName:
+          description: the name of the 
+          type: string
+          example: clock
+          enum: [clock]
+        args:
+          type: object
     MoveToPointOrder:
       type: object
       required:
