@@ -212,6 +212,44 @@ paths:
           description: track with this name doesn't exist
         '500':
           description: internal server error
+  /playlists/list:
+    get:
+      tags: 
+        - playlists
+      summary: | 
+        returns list of playlist files on the machine
+      responses:
+        '200':
+          description: shows the playlists
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - data
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                    description: should always be set to "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FileInfo'
+                  
+        '4XX':
+          description: a client error occured 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendError'
+        '500':
+          description: a server error ocurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendFail'
 # reusable components
 components:
   schemas:
@@ -352,7 +390,27 @@ components:
           example: 0.3
           minimum: -1.0
           maximum: 1.0
-
+    FileInfo:
+      type: object
+      required:
+        - filename
+        - size
+        - lastModified
+      properties:
+        filename:
+          type: string
+          example: "bursty_bezier.thr"
+          description: the file name without the path
+        size:
+          type: number
+          format: integer
+          example: 1023
+          description: size of the file in bytes
+        lastModified:
+          type: number
+          format: integer
+          example: 1632744684
+          description: timestamp of the last time the file was modified
 #    EmptyJSendResult:
 #      oneOf:
 #        - $ref: '#/components/schemas/JSendSuccess'
