@@ -250,6 +250,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JSendFail'
+  /tracks/list:
+    get:
+      tags: 
+        - tracks
+      summary: | 
+        returns list of tracks files on the machine
+      responses:
+        '200':
+          description: shows the tracks
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - data
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                    description: should always be set to "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FileInfo'
+                  
+        '4XX':
+          description: a client error occured 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendError'
+        '500':
+          description: a server error ocurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendFail'
 # reusable components
 components:
   schemas:
