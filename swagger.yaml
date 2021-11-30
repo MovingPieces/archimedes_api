@@ -234,9 +234,14 @@ paths:
                     enum: [success]
                     description: should always be set to "success"
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/FileInfo'
+                    type: object
+                    required:
+                      - files
+                    properties:
+                      files:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/FileInfo'
                   
         '4XX':
           description: a client error occured 
@@ -272,9 +277,14 @@ paths:
                     enum: [success]
                     description: should always be set to "success"
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/FileInfo'
+                    type: object
+                    required:
+                      - files
+                    properties:
+                      files:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/FileInfo'
                   
         '4XX':
           description: a client error occured 
