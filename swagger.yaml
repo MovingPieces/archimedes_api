@@ -441,22 +441,20 @@ components:
     FileInfo:
       type: object
       required:
-        - filename
+        - fileName
         - size
         - lastModified
       properties:
-        filename:
+        fileName:
           type: string
           example: "bursty_bezier.thr"
           description: the file name without the path
         size:
           type: number
-          format: integer
           example: 1023
           description: size of the file in bytes
         lastModified:
           type: number
-          format: integer
           example: 1632744684
           description: timestamp of the last time the file was modified
 #    EmptyJSendResult:
