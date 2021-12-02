@@ -242,6 +242,22 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/FileInfo'
+                        example:
+                          - fileName: clean.txt
+                            size: 1024
+                            lastModified: 1613427784
+                          - fileName: for guests.txt
+                            size: 23000
+                            lastModified: 1613400000
+                          - fileName: nighttime.txt
+                            size: 2000000
+                            lastModified: 1613527784
+                          - fileName: demo.txt
+                            size: 23000
+                            lastModified: 1613300000
+                          - fileName: Hi Mom.txt
+                            size: 1024
+                            lastModified: 1613427784
                   
         '4XX':
           description: a client error occured 
