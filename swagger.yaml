@@ -285,6 +285,55 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/FileInfo'
+                        example: 
+                          - fileName: pretty_spiral.thr
+                            size: 1024
+                            lastModified: 1613427784
+                          - fileName: pretty_pattern.thr
+                            size: 23000
+                            lastModified: 1613400000
+                          - fileName: chaos monkey.thr
+                            size: 2000000
+                            lastModified: 1613527784
+                          - fileName: aardvark.thr
+                            size: 23000
+                            lastModified: 1613300000
+                          - fileName: YinYang.thr
+                            size: 1024
+                            lastModified: 1613427784
+                          - fileName: dither.thr
+                            size: 23000
+                            lastModified: 1613400000
+                          - fileName: foobar.thr
+                            size: 2000000
+                            lastModified: 1613527784
+                          - fileName: bazban.thr
+                            size: 23000
+                            lastModified: 1613300000
+                          - fileName: zooming.thr
+                            size: 1024
+                            lastModified: 1613427784
+                          - fileName: sierpinsky.thr
+                            size: 23000
+                            lastModified: 1613400000
+                          - fileName: fractal1.thr
+                            size: 2000000
+                            lastModified: 1613527784
+                          - fileName: fractal2.thr
+                            size: 23000
+                            lastModified: 1613300000
+                          - fileName: example.thr
+                            size: 1024
+                            lastModified: 1613427784
+                          - fileName: banana.thr
+                            size: 23000
+                            lastModified: 1613400000
+                          - fileName: rotate_twice_and_spiral_out.thr
+                            size: 2000000
+                            lastModified: 1613527784
+                          - fileName: hi thar.thr
+                            size: 23000
+                            lastModified: 1613300000
                   
         '4XX':
           description: a client error occured 
