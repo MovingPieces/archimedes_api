@@ -131,7 +131,7 @@ paths:
                   default: false
       responses:
         '200':
-          description: order accepted
+          description: information returned
           content:
             application/json:
               schema:
@@ -146,6 +146,69 @@ paths:
                     description: should always be set to "success"
                   data:
                     $ref: '#/components/schemas/Point'
+                  
+        '4XX':
+          description: a client error occured 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendError'
+        '500':
+          description: a server error ocurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendFail'
+  /info/getCurrentStatus:
+    post:
+      tags: 
+        - info
+      summary: | 
+        gets the current status of the table
+      description: |
+        The returned currentPosition Point will be in the requested coordinate system and
+        simplified if requested.
+        
+        If no coordinatesystem is provided, no currentPosition is returned
+        
+        NOTE: This endpoint is POST instead of GET for a couple of reasons:
+        - client code consistency - consistent way of passing parameters
+        - making sure the browser/client doesn't cache the response
+        - we're not doing REST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coordinateSystem:
+                  type: string
+                  enum: [ThetaRho, XY]
+                simplify:
+                  type: boolean
+                  default: false
+      responses:
+        '200':
+          description: information returned
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - data
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                    description: should always be set to "success"
+                  data:
+                    type: object
+                    properties:
+                      position:
+                        $ref: '#/components/schemas/Point'
+                      action:
+                        $ref: '#/components/schemas/Action'
                   
         '4XX':
           description: a client error occured 
@@ -195,7 +258,7 @@ paths:
           required: true
           schema:
             type: string
-          example: bezier.thr
+          example: dither.thr
       responses:
         '200':
           description: the track does exist and is returned in the same format it's stored on the table's SD card
@@ -203,11 +266,23 @@ paths:
             text/plain:
               example: |
                 0 0
-                -0.83298127 0.00997723
-                -0.83298127 1
-                0.21011752 1
-                0.19935711 0.99980198
-                0.18854971 0.99768181
+                30 1
+                31 1
+                0 0
+                32 1
+                33 1
+                0 0
+                34 1
+                35 1
+                0 0
+                36 1
+                37 1
+                0 0
+                38 1
+                39 1
+                0 0
+                40 1
+                41 1
         '404':
           description: track with this name doesn't exist
         '500':
@@ -370,6 +445,48 @@ components:
       type: string
       enum: [spiral, linear]
     ## orders
+    Action:
+      oneOf:
+        - $ref: '#/components/schemas/PlaylistAction'
+        - $ref: '#/components/schemas/TrackAction'
+        - $ref: '#/components/schemas/StoppedAction'
+      discriminator:
+        propertyName: actionType
+    StoppedAction:
+      type: object
+      required:
+        - actionType
+      properties:
+        actionType:
+          type: string
+          enum: [stopped]
+    TrackAction:
+      type: object
+      required:
+        - actionType
+      properties:
+        actionType:
+          type: string
+          enum: [track]
+        trackName:
+          type: string
+          example: hexagoner.thr
+    PlaylistAction:
+      type: object
+      required:
+        - actionType
+      properties:
+        actionType:
+          type: string
+          enum: [playlist]
+        playlistName:
+          type: string
+          example: main
+        laylistPosition:
+          type: number
+          example: 0
+        currentTrackAction:
+          $ref: '#/components/schemas/TrackAction'
     Order:
       oneOf:
         - $ref: '#/components/schemas/StopOrder'
