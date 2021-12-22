@@ -159,7 +159,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JSendFail'
-  /info/getCurrentStatus:
+  /info/getStatus:
     post:
       tags: 
         - info
@@ -180,13 +180,13 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                coordinateSystem:
-                  type: string
-                  enum: [ThetaRho, XY]
-                simplify:
-                  type: boolean
-                  default: false
+#              properties:
+#                coordinateSystem:
+#                  type: string
+#                  enum: [ThetaRho, XY]
+#                simplify:
+#                  type: boolean
+#                  default: false
       responses:
         '200':
           description: information returned
@@ -205,8 +205,8 @@ paths:
                   data:
                     type: object
                     properties:
-                      position:
-                        $ref: '#/components/schemas/Point'
+                      #position:
+                      #  $ref: '#/components/schemas/Point'
                       action:
                         $ref: '#/components/schemas/Action'
                   
@@ -482,7 +482,8 @@ components:
         playlistName:
           type: string
           example: main
-        laylistPosition:
+        currentIndex:
+          description: zero-based index of the current track in the playlist
           type: number
           example: 0
         currentTrackAction:
