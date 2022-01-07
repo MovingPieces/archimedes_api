@@ -53,10 +53,25 @@ paths:
                 value:
                   orderType: playPlaylist
                   playlistName: clean_fast
-
+              play track:
+                value:
+                  orderType: playTrack
+                  playlistName: clean_fast.trh
               stop:
                 value:
                   orderType: stop
+              pause:
+                value:
+                  orderType: pause
+              unpause:
+                value:
+                  orderType: unpause
+              goToNext:
+                value:
+                  orderType: goToNext
+              goToPrevious:
+                value:
+                  orderType: goToPrevious
               move to point - XY:
                 value:
                   orderType: moveToPoint
@@ -482,15 +497,20 @@ components:
         playlistName:
           type: string
           example: main
+        trackName:
+          type: string
+          example: sharpSawtooth.thr
         currentIndex:
           description: zero-based index of the current track in the playlist
           type: number
           example: 0
-        currentTrackAction:
-          $ref: '#/components/schemas/TrackAction'
     Order:
       oneOf:
         - $ref: '#/components/schemas/StopOrder'
+        - $ref: '#/components/schemas/PauseOrder'
+        - $ref: '#/components/schemas/UnpauseOrder'
+        - $ref: '#/components/schemas/GoToNextOrder'
+        - $ref: '#/components/schemas/GoToPreviousOrder'
         - $ref: '#/components/schemas/PlayPlaylistOrder'
         - $ref: '#/components/schemas/MoveToPointOrder'
         - $ref: '#/components/schemas/RunAppOrder'
@@ -507,6 +527,50 @@ components:
           example: stop
       example:
         orderType: stop
+    PauseOrder:
+      type: object
+      required:
+        - orderType
+      properties:
+        orderType:
+          type: string
+          enum: [pause]
+          example: pause
+      example:
+        orderType: pause
+    UnpauseOrder:
+      type: object
+      required:
+        - orderType
+      properties:
+        orderType:
+          type: string
+          enum: [unpause]
+          example: unpause
+      example:
+        orderType: unpause
+    GoToNextOrder:
+      type: object
+      required:
+        - orderType
+      properties:
+        orderType:
+          type: string
+          enum: [goToNext]
+          example: goToNext
+      example:
+        orderType: goToNext
+    GoToPreviousOrder:
+      type: object
+      required:
+        - orderType
+      properties:
+        orderType:
+          type: string
+          enum: [goToPrevious]
+          example: goToPrevious
+      example:
+        orderType: goToPrevious
     PlayPlaylistOrder:
       type: object
       required:
@@ -521,6 +585,20 @@ components:
           description: the name of the playlist, without the extension
           type: string
           example: my_favourites
+    PlayTrackOrder:
+      type: object
+      required:
+        - orderType
+        - trackName
+      properties:
+        orderType:
+          type: string
+          enum: [playTrack]
+          example: playTrack
+        playlistName:
+          description: the name of the track, *with* the extension
+          type: string
+          example: fuzzy.thr
     RunAppOrder:
       type: object
       required:
