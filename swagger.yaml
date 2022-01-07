@@ -56,7 +56,7 @@ paths:
               play track:
                 value:
                   orderType: playTrack
-                  playlistName: clean_fast.thr
+                  trackName: clean_fast.thr
               stop:
                 value:
                   orderType: stop
